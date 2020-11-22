@@ -1,6 +1,7 @@
 import unittest
 from node import Node
 from stack import Stack, LinkedStack
+from queue import Queue
 
 
 class MyTestCase(unittest.TestCase):
@@ -81,6 +82,41 @@ class MyTestCase(unittest.TestCase):
         # Peeking at an empty stack should cause an error.
         with self.assertRaises(Exception):
             stack.peek()
+
+    def test_queue(self):
+        queue = Queue()
+
+        # New queues should be empty.
+        self.assertEqual(queue.is_empty(), True)
+
+        # Added an item to the queue.
+        queue.enqueue(self.string1)
+        self.assertEqual(queue.peek(), self.string1)
+
+        # Now the queue should no longer be empty.
+        self.assertEqual(queue.is_empty(), False)
+
+        # Added another item to the list.
+        queue.enqueue(self.string2)
+        # Unlike in stacks, when new items are added to the queue,
+        # what's at the front does not change.
+        self.assertEqual(queue.peek(), self.string1)
+
+        # The strings should be returned in FILO order.
+        self.assertEqual(queue.dequeue(), self.string1)
+        self.assertEqual(queue.dequeue(), self.string2)
+
+        # Now that both strings have been dequeued,
+        # the queue should be empty.
+        self.assertEqual(queue.is_empty(), True)
+
+        # Peeking at an empty queue should cause an error.
+        with self.assertRaises(Exception):
+            queue.peek()
+
+        # Trying to dequeue an empty queue should cause an error.
+        with self.assertRaises(Exception):
+            queue.dequeue()
 
 
 if __name__ == '__main__':
