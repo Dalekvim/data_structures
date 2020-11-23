@@ -1,7 +1,7 @@
 import unittest
 from node import Node
 from stack import Stack, LinkedStack
-from queue import Queue
+from queue import Queue, CircularQueue
 
 
 class MyTestCase(unittest.TestCase):
@@ -117,6 +117,40 @@ class MyTestCase(unittest.TestCase):
         # Trying to dequeue an empty queue should cause an error.
         with self.assertRaises(Exception):
             queue.dequeue()
+
+    def test_circular_queue(self):
+        with self.assertRaises(Exception):
+            CircularQueue(0)
+
+        size = 2
+        circular_queue = CircularQueue(size)
+
+        self.assertEqual(circular_queue.is_empty(), True)
+        self.assertEqual(circular_queue.is_full(), False)
+
+        circular_queue.enqueue(self.string1)
+        self.assertEqual(circular_queue.peek(), self.string1)
+
+        self.assertEqual(circular_queue.is_empty(), False)
+        self.assertEqual(circular_queue.is_full(), False)
+
+        circular_queue.enqueue(self.string2)
+        self.assertEqual(circular_queue.peek(), self.string1)
+
+        self.assertEqual(circular_queue.is_empty(), False)
+        self.assertEqual(circular_queue.is_full(), True)
+
+        self.assertEqual(circular_queue.dequeue(), self.string1)
+        self.assertEqual(circular_queue.dequeue(), self.string2)
+
+        self.assertEqual(circular_queue.is_empty(), True)
+        self.assertEqual(circular_queue.is_full(), False)
+
+        with self.assertRaises(Exception):
+            circular_queue.peek()
+
+        with self.assertRaises(Exception):
+            circular_queue.dequeue()
 
 
 if __name__ == '__main__':
