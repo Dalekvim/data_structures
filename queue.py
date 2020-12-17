@@ -48,7 +48,7 @@ class CircularQueue(list):
         super().__init__()
 
         if size < 1:
-            raise Exception("Queue is too small.")
+            raise Exception("The queue is too small.")
 
         self.size = size
         for i in range(size):
